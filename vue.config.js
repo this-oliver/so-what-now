@@ -27,13 +27,4 @@ module.exports = {
 			return args;
 		});
 	},
-	devServer: {
-		proxy: {
-			"/api": {
-				target: process.env.VUE_APP_API,
-				secure: false,
-				changeOrigin: true,
-			},
-		},
-	},
 };

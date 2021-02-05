@@ -6,7 +6,6 @@ import axios from "axios";
  */
 export const getNews = async query => {
 	const API_KEY = process.env.VUE_APP_NEWS_API_KEY;
-	console.log(API_KEY);
 	try {
 		let response = await axios.get(
 			`http://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`

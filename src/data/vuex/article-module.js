@@ -36,7 +36,6 @@ const actions = {
 		let query = `${goal}`;
 
 		let response = await getNews(query);
-		console.log(response);
 		let items = await response.data.articles;
 		let randomItemIndex = getRandomNumber(items.length - 1);
 

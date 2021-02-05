@@ -35,14 +35,12 @@ const actions = {
 		if (title.length > 30) { //shorten string, if necessary
 			title = title.substring(0, 30);
 		}
-		let query = `${title}`;
 		let response = null;
 		
 		try {
-			response = await getNews(query);
+			response = await getNews(title);
 		} catch (error) {
 			console.log(error);
-			throw error;
 		}
 
 		if(!response) throw "goal is missing";

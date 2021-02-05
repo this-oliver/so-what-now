@@ -5,7 +5,7 @@
         class="title mt-5 mb-1"
         align-h="center">
         <b-col cols="auto">
-          So-What-Now?
+          So-What-Now? 🤔
         </b-col>
       </b-row>
       <b-row

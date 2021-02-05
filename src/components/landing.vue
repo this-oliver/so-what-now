@@ -2,10 +2,10 @@
   <div>
     <b-row
       class="my-5"
-      align-h="between"
+      align-h="around"
       v-if="goal && area">
       <b-col
-        sm="10"
+        sm="11"
         md="7">
         <span class="sub-title">
           Goal
@@ -16,7 +16,7 @@
             <b>📍 Goal</b> {{ goal.code }}: {{ goal.title }}
           </b-card-title>
           <b-card-sub-title>
-            🗺 Country: <b>{{ area }}</b>
+            🌍 Country: <b>{{ area }}</b>
           </b-card-sub-title>
           <hr>
           <b-card-text>
@@ -25,15 +25,15 @@
         </b-card>
       </b-col>
       <b-col
-        sm="10"
-        md="3"
+        sm="11"
+        md="4"
         v-if="article">
         <span class="sub-title">
           Random Article
         </span>
         <hr>
         <p>
-          {{ article.title }}
+          📰 {{ article.title }}
         </p>
         <b-link
           :href="article.url"
@@ -56,7 +56,7 @@
       <b-col
         class="mb-1"
         sm="10"
-        md="6"
+        md="11"
         v-for="target in goal.targets"
         :key="target.code">
         <b-card>

@@ -23,7 +23,7 @@ module.exports = {
 
 		// plugin
 		config.plugin("html").tap(args => {
-			args[0].title = "So-What-Now?";
+			args[0].title = "🤔 So-What-Now?";
 			return args;
 		});
 	},

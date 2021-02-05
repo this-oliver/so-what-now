@@ -1,27 +1,55 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { fetchSdgs } from "./data/sdg";
+import { getAllGoals, getSingleGoal, getGoalAreas } from "./data/sdg-api";
+import {getRandomNumber} from "./helpers/random";
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
 	state: {
-		sdgs: []
+		goal: null,
+		area: null,
 	},
 	getters: {
-		getSdgs: state => state.sdgs
+		getGoal: state => state.goal,
+		getArea: state => state.area,
 	},
 	mutations: {
-		setSdg: (state, sdgs) => {
-			state.sdgs = sdgs;
-		}
+		setGoal: (state, goal)=>{
+			state.goal = goal;
+		},
+		setArea: (state, area)=>{
+			state.area = area;
+		},
 	},
 	actions: {
-		fetchSdg: async contex => {
-			let response = await fetchSdgs();
+		generate: async function(context){
+			let goals = await context.dispatch("fetchAllGoals");
+			let randomGoalNumber = getRandomNumber(goals.length-1);
+			
+			await context.dispatch("fetchSingleGoal",randomGoalNumber);
+			await context.dispatch("fetchAreas", randomGoalNumber);
+		},
+		fetchAllGoals: async () => {
+			let response = await getAllGoals();
 			let sdg = response.data;
-			contex.commit("setSdg", sdg);
-		}
+			return sdg;
+		},
+		fetchSingleGoal: async (context, goalNumber) => {
+			let response = await getSingleGoal(goalNumber);
+			let goal = response.data[0];
+			context.commit("setGoal", goal);
+			return goal;
+		},
+		fetchAreas: async (context, goalNumber) => {
+			let response = await getGoalAreas(goalNumber);
+			let areas = response.data;
+			let randomArea = getRandomNumber(areas.length-1);
+			
+			let singleArea = areas[randomArea].geoAreaName;
+			context.commit("setArea", singleArea);
+			return areas;
+		},
 	}
 });
 

@@ -6,9 +6,15 @@ import axios from "axios";
  */
 export const getNews = async query => {
 	const API_KEY = process.env.VUE_APP_NEWS_API_KEY;
+
+	const config = {
+		headers: { "Access-Control-Allow-Origin": "*" }
+	};
+
 	try {
 		let response = await axios.get(
-			`https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`
+			`https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`,
+			config
 		);
 		console.log(response);
 		if (response.status == 200) return response;

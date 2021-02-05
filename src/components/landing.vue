@@ -26,12 +26,20 @@
       </b-col>
       <b-col
         sm="10"
-        md="3">
+        md="3"
+        v-if="article">
         <span class="sub-title">
           Random Article
         </span>
         <hr>
-        <b-link> click me</b-link>
+        <p>
+          {{ article.title }}
+        </p>
+        <b-link
+          :href="article.url"
+          target="_blank">
+          click me
+        </b-link>
       </b-col>
     </b-row>
     <hr v-if="goal && area">
@@ -94,15 +102,11 @@
 
 	export default {
 		name: "Landing",
-		data: function(){
-			return{
-				article: null,
-			};
-		},
 		computed: {
 			...mapGetters({
 				goal:"sdg/getGoal",
-				area: "sdg/getArea"
+				area: "sdg/getArea",
+				article: "article/getArticle",
 			})
 		},
 		methods: {

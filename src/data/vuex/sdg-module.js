@@ -27,7 +27,7 @@ const actions = {
 
 		await context.dispatch("fetchSingleGoal", randomGoalNumber).title;
 		await context.dispatch("fetchSdgAreas", randomGoalNumber);
-		await context.dispatch("article/queryWikiArticle", null, { root: true });
+		await context.dispatch("article/queryWeb", null, { root: true });
 	},
 	fetchAllGoals: async () => {
 		let response = await getAllGoals();

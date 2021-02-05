@@ -1,4 +1,5 @@
 import { getRandomNumber } from "../../helpers/random";
+import { getRandomSearch } from "../api/usearch-api";
 import { getWikiArticles } from "../api/wiki-api";
 
 const namespaced = true;
@@ -20,18 +21,25 @@ const actions = {
 		let goal = context.rootGetters["sdg/getGoal"].title;
 		let area = context.rootGetters["sdg/getArea"];
 		let query = `${goal} and ${area}`;
-		console.log(query);
-		let wikiArticles = await context.dispatch("fetchArticles", query);
+
+		let wikiArticles = await getWikiArticles(query).data;
 		let randomArticleIndex = getRandomNumber(wikiArticles.length - 1);
 
 		let article = wikiArticles[randomArticleIndex];
 		context.commit("setArticle", article);
 	},
-	fetchArticles: async query => {
-		let response = await getWikiArticles(query);
-		let articles = response.data;
-		return articles;
-	}
+	queryWeb: async function(context) {
+		let goal = context.rootGetters["sdg/getGoal"].title;
+		let area = context.rootGetters["sdg/getArea"];
+		let query = `${goal} and ${area}`;
+
+		let data = await getRandomSearch(query);
+		let items = await data.value;
+		let randomItemIndex = getRandomNumber(items.length - 1);
+
+		let article = items[randomItemIndex];
+		context.commit("setArticle", article);
+	},
 };
 
 export default {

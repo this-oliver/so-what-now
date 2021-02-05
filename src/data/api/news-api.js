@@ -11,9 +11,9 @@ export const getNews = async query => {
 			`http://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`
 		);
 		if (response.status == 200) return Promise.resolve(response);
-		return Promise.reject(response);
+		throw Promise.reject(response);
 	} catch (error) {
-		return Promise.reject(error);
+		throw Promise.reject(error);
 	}
 };
 

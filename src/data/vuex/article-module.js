@@ -30,15 +30,23 @@ const actions = {
 	},
 	queryWeb: async function(context) {
 		let goal = context.rootGetters["sdg/getGoal"];
-		if(!goal) return;
 		
 		let title = goal.title;
 		if (title.length > 30) { //shorten string, if necessary
 			title = title.substring(0, 30);
 		}
 		let query = `${title}`;
+		let response = null;
+		
+		try {
+			response = await getNews(query);
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
 
-		let response = await getNews(query);
+		if(!response) throw "goal is missing";
+
 		let items = await response.data.articles;
 		let randomItemIndex = getRandomNumber(items.length - 1);
 

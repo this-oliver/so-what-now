@@ -1,5 +1,5 @@
 import { getRandomNumber } from "../../helpers/random";
-import { getRandomSearch } from "../api/usearch-api";
+import { getNews } from "../api/news-api";
 import { getWikiArticles } from "../api/wiki-api";
 
 const namespaced = true;
@@ -30,11 +30,14 @@ const actions = {
 	},
 	queryWeb: async function(context) {
 		let goal = context.rootGetters["sdg/getGoal"].title;
-		let area = context.rootGetters["sdg/getArea"];
-		let query = `${goal} and ${area}`;
+		if(goal.length > 30){
+			goal = goal.substring(0, 30);
+		}
+		let query = `${goal}`;
 
-		let data = await getRandomSearch(query);
-		let items = await data.value;
+		let response = await getNews(query);
+		console.log(response);
+		let items = await response.data.articles;
 		let randomItemIndex = getRandomNumber(items.length - 1);
 
 		let article = items[randomItemIndex];

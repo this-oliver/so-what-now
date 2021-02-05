@@ -10,6 +10,7 @@ export const getNews = async query => {
 		let response = await axios.get(
 			`https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`
 		);
+		console.log(response);
 		if (response.status == 200) return Promise.resolve(response);
 		throw Promise.reject(response);
 	} catch (error) {

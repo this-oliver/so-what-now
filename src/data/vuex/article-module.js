@@ -30,7 +30,7 @@ const actions = {
 	},
 	queryWeb: async function(context) {
 		let goal = context.rootGetters["sdg/getGoal"].title;
-		if(goal.length > 30){
+		if(goal.length > 30){ //shorten string, if necessary
 			goal = goal.substring(0, 30);
 		}
 		let query = `${goal}`;

@@ -19,24 +19,25 @@
         </b-card>
       </template>
 
-      <!-- title -->
+      <!-- title and link -->
       <b-row
         class="my-5"
         align-h="around"
         v-if="goal && area">
         <b-col
+          class="mt-2"
           sm="11"
           md="7">
           <span class="sub-title">
-            Goal
+            📍 Goal {{ goal.code }}
           </span>
           <hr>
           <b-card>
             <b-card-title>
-              <b>📍 Goal</b> {{ goal.code }}: {{ goal.title }}
+              <b>🗃 Title</b>: {{ goal.title }}
             </b-card-title>
             <b-card-sub-title>
-              🌍 Country: <b>{{ area }}</b>
+              <b>🌍 Country</b> : {{ area }}
             </b-card-sub-title>
             <hr>
             <b-card-text>
@@ -45,20 +46,21 @@
           </b-card>
         </b-col>
         <b-col
+          class="mt-2"
           sm="11"
           md="4"
           v-if="article">
           <span class="sub-title">
-            Random Article
+            📰 Random Article
           </span>
           <hr>
           <p>
-            📰 {{ article.title }}
+            {{ article.title }}
           </p>
           <b-link
             :href="article.url"
             target="_blank">
-            click me
+            click me to read article
           </b-link>
         </b-col>
       </b-row>
@@ -68,11 +70,13 @@
         class="my-5"
         align-h="center"
         v-if="goal && area">
-        <b-col cols="12">
+        <b-col
+          class="mt-2"
+          cols="12">
           <hr>
           <span
             class="sub-title">
-            Targets
+            🎯 Targets
           </span>
         </b-col>
         <b-col
@@ -83,7 +87,7 @@
           :key="target.code">
           <b-card>
             <b-card-title>
-              <b>🎯 {{ target.code }}</b>
+              <b>{{ target.code }}</b>
             </b-card-title>
             <b-card-text>
               {{ target.description }}
@@ -106,6 +110,7 @@
         </b-col>
       </b-row>
     </b-skeleton-wrapper>
+
     <!-- buttons -->
     <b-row
       class="my-5"

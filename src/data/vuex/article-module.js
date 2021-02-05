@@ -29,11 +29,14 @@ const actions = {
 		context.commit("setArticle", article);
 	},
 	queryWeb: async function(context) {
-		let goal = context.rootGetters["sdg/getGoal"].title;
-		if(goal.length > 30){ //shorten string, if necessary
-			goal = goal.substring(0, 30);
+		let goal = context.rootGetters["sdg/getGoal"];
+		if(!goal) return;
+		
+		let title = goal.title;
+		if (title.length > 30) { //shorten string, if necessary
+			title = title.substring(0, 30);
 		}
-		let query = `${goal}`;
+		let query = `${title}`;
 
 		let response = await getNews(query);
 		let items = await response.data.articles;

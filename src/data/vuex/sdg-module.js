@@ -30,11 +30,11 @@ const actions = {
 		context.commit("getGoalStatus", true);
 		let goals = await context.dispatch("fetchAllGoals");
 		let randomGoalNumber = getRandomNumber(goals.length - 1);
-		
 		await context.dispatch("fetchSingleGoal", randomGoalNumber);
 		await context.dispatch("fetchSdgAreas", randomGoalNumber + 1); // adds 1 to avoid 0 value in randomNumber variable
-		await context.dispatch("article/queryWeb", null, { root: true });
 		context.commit("getGoalStatus", false);
+    
+		await context.dispatch("article/queryWeb", null, { root: true });
 	},
 	fetchAllGoals: async () => {
 		let response = await getAllGoals();

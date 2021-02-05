@@ -25,8 +25,9 @@ const actions = {
 		let goals = await context.dispatch("fetchAllGoals");
 		let randomGoalNumber = getRandomNumber(goals.length - 1);
 
-		await context.dispatch("fetchSingleGoal", randomGoalNumber);
-		await context.dispatch("fetchAreas", randomGoalNumber);
+		await context.dispatch("fetchSingleGoal", randomGoalNumber).title;
+		await context.dispatch("fetchSdgAreas", randomGoalNumber);
+		await context.dispatch("article/queryWikiArticle", null, { root: true });
 	},
 	fetchAllGoals: async () => {
 		let response = await getAllGoals();
@@ -39,14 +40,15 @@ const actions = {
 		context.commit("setGoal", goal);
 		return goal;
 	},
-	fetchAreas: async (context, goalNumber) => {
+	fetchSdgAreas: async (context, goalNumber) => {
 		let response = await getGoalAreas(goalNumber);
-		let areas = response.data;
-		let randomArea = getRandomNumber(areas.length - 1);
+		let sdgAreas = response.data;
+		let randomArea = getRandomNumber(sdgAreas.length - 1);
 
-		let singleArea = areas[randomArea].geoAreaName;
-		context.commit("setArea", singleArea);
-		return singleArea;
+		let area = sdgAreas[randomArea];
+		let areaName = area.geoAreaName;
+		context.commit("setArea", areaName);
+		return areaName;
 	}
 };
 

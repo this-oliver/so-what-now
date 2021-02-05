@@ -1,14 +1,16 @@
 <template>
   <div id="app">
-    <b-container>
+    <b-container fluid>
       <b-row
-        class="title my-5"
+        class="title mt-5 mb-1"
         align-h="center">
         <b-col cols="auto">
           So-What-Now?
         </b-col>
       </b-row>
-      <b-row class="my-5">
+      <b-row
+        class="my-2"
+        align-h="center">
         <b-col cols="11">
           <landing />
         </b-col>

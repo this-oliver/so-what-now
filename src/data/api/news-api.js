@@ -8,7 +8,7 @@ export const getNews = async query => {
 	const API_KEY = process.env.VUE_APP_NEWS_API_KEY;
 	try {
 		let response = await axios.get(
-			`http://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`
+			`https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`
 		);
 		if (response.status == 200) return Promise.resolve(response);
 		throw Promise.reject(response);

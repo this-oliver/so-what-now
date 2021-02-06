@@ -38,10 +38,9 @@ const actions = {
 		
 		try {
 			let articles = await getNews(title);
-			let items = await articles;
-			let randomItemIndex = getRandomNumber(items.length - 1);
+			let randomArticleIndex = getRandomNumber(articles.length - 1);
 	
-			let article = items[randomItemIndex];
+			let article = articles[randomArticleIndex];
 			context.commit("setArticle", article);
 		} catch (error) {
 			console.log(error);

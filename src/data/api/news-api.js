@@ -39,7 +39,6 @@ const getNewsAPIFeed = async query => {
 				}
 			}
 		);
-		console.log(response);
 
 		if (response.status == 200){
 			let list = response.data.articles;
@@ -73,7 +72,12 @@ const getUsearchFeed = async query => {
 			"https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI",
 			{
 				params: {
-					q: query
+					q: query,
+					pageNumber: "1",
+					pageSize: "10",
+					autoCorrect: "true",
+					fromPublishedDate: "null",
+					toPublishedDate: "null"
 				},
 				headers: {
 					"Content-Type": "application/json",
@@ -83,7 +87,6 @@ const getUsearchFeed = async query => {
 				}
 			}
 		);
-		console.log(response);
 
 		if (response.status == 200){
 			let list = response.data.value;
@@ -127,8 +130,6 @@ const getNewsCatcherFeed = async query => {
 				}
 			}
 		);
-		
-		console.log(response);
 		
 		if (response.status == 200){
 			let list = response.data.articles;

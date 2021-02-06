@@ -55,12 +55,15 @@
           </span>
           <hr>
           <p>
-            {{ article.title }}
+            <b>{{ article.title }}</b>
+          </p>
+          <p>
+            <small><i>{{ article.description }}</i></small>
           </p>
           <b-link
             :href="article.url"
             target="_blank">
-            click me to read article
+            click me to read full article
           </b-link>
         </b-col>
       </b-row>

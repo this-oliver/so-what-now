@@ -35,21 +35,19 @@ const actions = {
 		if (title.length > 30) { //shorten string, if necessary
 			title = title.substring(0, 30);
 		}
-		let response = null;
 		
 		try {
-			response = await getNews(title);
+			let articles = await getNews(title);
+			let items = await articles;
+			let randomItemIndex = getRandomNumber(items.length - 1);
+	
+			let article = items[randomItemIndex];
+			context.commit("setArticle", article);
 		} catch (error) {
 			console.log(error);
 		}
 
-		if(!response) throw "failed to get news";
 
-		let items = await response.data.articles;
-		let randomItemIndex = getRandomNumber(items.length - 1);
-
-		let article = items[randomItemIndex];
-		context.commit("setArticle", article);
 	},
 };
 

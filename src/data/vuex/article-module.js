@@ -4,14 +4,19 @@ import { getNews } from "../api/news-api";
 const namespaced = true;
 
 const state = {
-	article: null
+	article: null,
+	loadingArticle: false
 };
 const getters = {
-	getArticle: state => state.article
+	getArticle: state => state.article,
+	getArticleStatus: state => state.loadingArticle
 };
 const mutations = {
 	setArticle: (state, article) => {
 		state.article = article;
+	},
+	setArticleStatus: (state, loadingArticle) => {
+		state.loadingArticle = loadingArticle;
 	}
 };
 
@@ -26,9 +31,11 @@ const actions = {
 		}
 		
 		try {
+			context.commit("setArticleStatus", true);
 			let articles = await getNews(title, area);
+			context.commit("setArticleStatus", false);
+
 			let randomArticleIndex = getRandomNumber(articles.length - 1);
-	
 			let article = articles[randomArticleIndex];
 			context.commit("setArticle", article);
 		} catch (error) {

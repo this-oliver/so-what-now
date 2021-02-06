@@ -1,33 +1,23 @@
 <template>
   <div>
-    <b-skeleton-wrapper :loading="loadingGoal">
-      <!-- loading gesture -->
-      <template #loading>
-        <b-card
-          class="mb-2"
-          v-for="(i, index) in [1, 2, 3]"
-          :key="index">
-          <b-skeleton
-            animation="wave"
-            width="85%" />
-          <b-skeleton
-            animation="wave"
-            width="55%" />
-          <b-skeleton
-            animation="wave"
-            width="70%" />
-        </b-card>
-      </template>
-
-      <!-- title and link -->
-      <b-row
-        class="my-5"
-        align-h="around"
-        v-if="goal && area">
-        <b-col
-          class="mt-2"
-          sm="11"
-          md="7">
+    <!-- title and link -->
+    <b-row
+      class="my-5"
+      align-h="around"
+      v-if="goal && area">
+      <b-col
+        class="mt-2"
+        sm="11"
+        md="7">
+        <b-skeleton-wrapper :loading="loadingGoal">
+          <template #loading>
+            <b-skeleton
+              animation="wave"
+              width="85%" />
+            <b-skeleton
+              animation="wave"
+              width="100%" />
+          </template>
           <p>
             <span class="sub-title">
               📍 Goal {{ goal.code }} in 🌍 {{ area }}
@@ -43,50 +33,76 @@
               {{ goal.description }}
             </b-card-text>
           </b-card>
-        </b-col>
-        <b-col
-          class="mt-2"
-          sm="11"
-          md="4"
-          v-if="article">
+        </b-skeleton-wrapper>
+      </b-col>
+      <b-col
+        class="mt-2"
+        sm="11"
+        md="4">
+        <b-skeleton-wrapper :loading="loadingArticle">
+          <template #loading>
+            <b-card>
+              <b-skeleton
+                animation="wave"
+                width="100%" />
+              <b-skeleton
+                animation="wave"
+                width="85%" />
+              <b-skeleton
+                animation="wave"
+                width="40%" />
+            </b-card>
+          </template>
           <span class="sub-title">
             📰 Random Article
           </span>
           <hr>
-          <p>
-            <b>{{ article.title }}</b>
-          </p>
-          <p>
-            <small><i>{{ article.description }}</i></small>
-          </p>
-          <b-link
-            :href="article.url"
-            target="_blank">
-            click me to read full article
-          </b-link>
-        </b-col>
-      </b-row>
-
-      <!-- targets -->
-      <b-row
-        class="my-5"
-        align-h="center"
-        v-if="goal && area">
-        <b-col
-          class="mt-2"
-          cols="12">
-          <hr>
-          <span
-            class="sub-title">
-            🎯 Targets
+          <span v-if="article">
+            <p>
+              <b>{{ article.title }}</b>
+            </p>
+            <p>
+              <small><i>{{ article.description }}</i></small>
+            </p>
+            <b-link
+              :href="article.url"
+              target="_blank">
+              click me to read full article
+            </b-link>
           </span>
-        </b-col>
-        <b-col
-          class="mb-1"
-          sm="11"
-          md="11"
-          v-for="target in goal.targets"
-          :key="target.code">
+        </b-skeleton-wrapper>
+      </b-col>
+    </b-row>
+
+    <!-- targets -->
+    <b-row
+      class="my-5"
+      align-h="center"
+      v-if="goal && area">
+      <b-col
+        class="mt-2"
+        cols="12">
+        <hr>
+        <span
+          class="sub-title">
+          🎯 Targets
+        </span>
+      </b-col>
+      <b-col
+        class="mb-1"
+        sm="11"
+        md="11"
+        v-for="target in goal.targets"
+        :key="target.code">
+        <b-skeleton-wrapper :loading="loadingGoal">
+          <template #loading>
+            <b-skeleton
+              animation="wave"
+              width="85%" />
+            <b-skeleton
+              animation="wave"
+              width="100%" />
+          </template>
           <b-card>
             <b-card-title>
               <b>{{ target.code }}</b>
@@ -109,9 +125,9 @@
               </b-list-group-item>
             </b-list-group>
           </b-card>
-        </b-col>
-      </b-row>
-    </b-skeleton-wrapper>
+        </b-skeleton-wrapper>
+      </b-col>
+    </b-row>
 
     <!-- buttons -->
     <b-row
@@ -146,7 +162,8 @@
 				goal:"sdg/getGoal",
 				area: "sdg/getArea",
 				article: "article/getArticle",
-				loadingGoal: "sdg/getGoalStatus"
+				loadingGoal: "sdg/getGoalStatus",
+				loadingArticle: "article/getArticleStatus",
 			}),
 			generated: function(){
 				return this.goal !== null || this.area !== null || this.article !== null;

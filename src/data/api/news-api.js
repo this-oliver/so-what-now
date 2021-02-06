@@ -5,10 +5,11 @@ import axios from "axios";
  * @param {String} - query
  */
 export const getNews = async query => {
+	let proxyUrl = window.location.href;
 	
 	try {
 		let response = await axios.get(
-			`https://newsapi.org/v2/everything?q=${query}`,
+			`${proxyUrl}https://newsapi.org/v2/everything?q=${query}`,
 			{
 				headers: {
 					"Content-Type": "application/json",

@@ -5,16 +5,16 @@ import axios from "axios";
  * @param {String} - query
  */
 export const getNews = async query => {
-	const API_KEY = process.env.VUE_APP_NEWS_API_KEY;
-
-	const config = {
-		headers: { "Access-Control-Allow-Origin": "*" }
-	};
-
+	
 	try {
 		let response = await axios.get(
-			`https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`,
-			config
+			`https://newsapi.org/v2/everything?q=${query}`,
+			{
+				headers: {
+					"Content-Type": "application/json",
+					"X-Api-Key": process.env.VUE_APP_NEWS_API_KEY
+				}
+			}
 		);
 		console.log(response);
 		if (response.status == 200) return response;

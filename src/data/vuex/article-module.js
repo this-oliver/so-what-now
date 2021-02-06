@@ -43,7 +43,7 @@ const actions = {
 			console.log(error);
 		}
 
-		if(!response) throw "goal is missing";
+		if(!response) throw "failed to get news";
 
 		let items = await response.data.articles;
 		let randomItemIndex = getRandomNumber(items.length - 1);

@@ -28,17 +28,16 @@
           class="mt-2"
           sm="11"
           md="7">
-          <span class="sub-title">
-            📍 Goal {{ goal.code }}
-          </span>
+          <p>
+            <span class="sub-title">
+              📍 Goal {{ goal.code }} in 🌍 {{ area }}
+            </span>
+          </p>
           <hr>
           <b-card>
             <b-card-title>
               <b>🗃 Title</b>: {{ goal.title }}
             </b-card-title>
-            <b-card-sub-title>
-              <b>🌍 Country</b> : {{ area }}
-            </b-card-sub-title>
             <hr>
             <b-card-text>
               {{ goal.description }}

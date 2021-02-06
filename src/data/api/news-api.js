@@ -1,26 +1,26 @@
 import axios from "axios";
 
-export const getNews = async query =>{
+export const getNews = async (query, area) =>{
 	
+	try {
+		return await getNewsCatcherFeed(query, area);
+	} catch (error) {
+		console.log(error);
+	}
+
+	try {
+		return await getUsearchFeed(query, area);
+	} catch (error) {
+		console.log(error);
+	}
+
 	try {
 		return await getNewsAPIFeed(query);
 	} catch (error) {
 		console.log(error);
 	}
 
-	try {
-		return await getUsearchFeed(query);
-	} catch (error) {
-		console.log(error);
-	}
-
-	try {
-		return await getNewsCatcherFeed(query);
-	} catch (error) {
-		console.log(error);
-	}
-
-	throw "failed to get any news feed";
+	throw "failed to get news articles";
 };
 
 /**
@@ -65,14 +65,14 @@ const getNewsAPIFeed = async query => {
  * returns a list of search items that match query string
  * @param {String} - query
  */
-const getUsearchFeed = async query => {
+const getUsearchFeed = async (query, area) => {
 
 	try {
 		let response = await axios.get(
 			"https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI",
 			{
 				params: {
-					q: query,
+					q: `${query} ${area}`,
 					pageNumber: "1",
 					pageSize: "10",
 					autoCorrect: "true",
@@ -113,14 +113,15 @@ const getUsearchFeed = async query => {
  * returns a list of search items that match query string
  * @param {String} - query
  */
-const getNewsCatcherFeed = async query => {
+const getNewsCatcherFeed = async (query, area) => {
 
 	try {
 		let response = await axios.get(
 			"https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI",
 			{
 				params: {
-					q: query
+					q: query,
+					country: area
 				},
 				headers: {
 					"Content-Type": "application/json",

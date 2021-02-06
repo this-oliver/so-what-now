@@ -3,13 +3,13 @@ import axios from "axios";
 export const getNews = async (query, area) =>{
 	
 	try {
-		return await getNewsCatcherFeed(query, area);
+		return await getUsearchFeed(query, area);
 	} catch (error) {
 		console.log(error);
 	}
-
+	
 	try {
-		return await getUsearchFeed(query, area);
+		return await getNewsCatcherFeed(query);
 	} catch (error) {
 		console.log(error);
 	}
@@ -24,45 +24,7 @@ export const getNews = async (query, area) =>{
 };
 
 /**
- * returns a list of search items that match query string
- * @param {String} - query
- */
-const getNewsAPIFeed = async query => {
-
-	try {
-		let response = await axios.get(
-			`https://newsapi.org/v2/everything?q=${query}`,
-			{
-				headers: {
-					"Content-Type": "application/json",
-					"X-Api-Key": process.env.VUE_APP_NEWS_API_KEY
-				}
-			}
-		);
-
-		if (response.status == 200){
-			let list = response.data.articles;
-			let articles = [];
-
-			list.forEach(article => {
-				articles.push({
-					title: article.title,
-					description: article.description,
-					url: article.url,
-					img: article.urlToImage
-				});
-			});
-			return articles;
-		}
-
-		throw response;
-	} catch (error) {
-		throw { NewsApiError: error };
-	}
-};
-
-/**
- * returns a list of search items that match query string
+ * returns a list of search items that match query string from Usearch
  * @param {String} - query
  */
 const getUsearchFeed = async (query, area) => {
@@ -110,18 +72,17 @@ const getUsearchFeed = async (query, area) => {
 };
 
 /**
- * returns a list of search items that match query string
+ * returns a list of search items that match query string from News Catcher API
  * @param {String} - query
  */
-const getNewsCatcherFeed = async (query, area) => {
+const getNewsCatcherFeed = async (query) => {
 
 	try {
 		let response = await axios.get(
 			"https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI",
 			{
 				params: {
-					q: query,
-					country: area
+					q: query
 				},
 				headers: {
 					"Content-Type": "application/json",
@@ -149,7 +110,45 @@ const getNewsCatcherFeed = async (query, area) => {
 		}
 		throw response;
 	} catch (error) {
-		throw { NewsCatcherApi: error };
+		throw { NewsCatcherAPI: error };
+	}
+};
+
+/**
+ * returns a list of search items that match query string from News API
+ * @param {String} - query
+ */
+const getNewsAPIFeed = async query => {
+
+	try {
+		let response = await axios.get(
+			`https://newsapi.org/v2/everything?q=${query}`,
+			{
+				headers: {
+					"Content-Type": "application/json",
+					"X-Api-Key": process.env.VUE_APP_NEWS_API_KEY
+				}
+			}
+		);
+
+		if (response.status == 200){
+			let list = response.data.articles;
+			let articles = [];
+
+			list.forEach(article => {
+				articles.push({
+					title: article.title,
+					description: article.description,
+					url: article.url,
+					img: article.urlToImage
+				});
+			});
+			return articles;
+		}
+
+		throw response;
+	} catch (error) {
+		throw { NewsAPIError: error };
 	}
 };
 

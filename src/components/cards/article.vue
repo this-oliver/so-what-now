@@ -2,7 +2,7 @@
   <div>
     <b-row>
       <b-col cols="12">
-        <b-skeleton-wrapper :loading="loadingArticle">
+        <b-skeleton-wrapper :loading="loading">
           <template #loading>
             <b-card>
               <b-skeleton

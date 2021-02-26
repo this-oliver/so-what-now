@@ -42,6 +42,10 @@
 				type: Object,
 				required: true
 			},
+			area:{
+				type: String,
+				required: true
+			},
 			loading:{
 				type: Boolean,
 				default: false

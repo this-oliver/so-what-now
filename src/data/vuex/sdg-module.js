@@ -5,17 +5,22 @@ const namespaced = true;
 
 const state = {
 	goal: null,
+	allGoals: [],
 	area: null,
 	loadingGoal: false
 };
 const getters = {
 	getGoal: state => state.goal,
+	getAllGoals: state => state.allGoals,
 	getArea: state => state.area,
 	getGoalStatus: state => state.loadingGoal
 };
 const mutations= {
 	setGoal: (state, goal) => {
 		state.goal = goal;
+	},
+	setAllGoals: (state, goals) => {
+		state.allGoals = goals;
 	},
 	setArea: (state, area) => {
 		state.area = area;
@@ -26,19 +31,31 @@ const mutations= {
 };
 
 const actions = {
-	generate: async function(context) {
-		context.commit("getGoalStatus", true);
-		let goals = await context.dispatch("fetchAllGoals");
+	generate: async (context) => {
+		let goals = context.getters["getAllGoals"];
 		let randomGoalNumber = getRandomNumber(goals.length - 1);
+		
+		context.commit("getGoalStatus", true);
 		await context.dispatch("fetchSingleGoal", randomGoalNumber);
-		await context.dispatch("fetchSdgAreas", randomGoalNumber + 1); // adds 1 to avoid 0 value in randomNumber variable
+		await context.dispatch("fetchSdgImpactAreas", randomGoalNumber + 1); // adds 1 to avoid 0 value in randomNumber variable
 		context.commit("getGoalStatus", false);
-    
+		
 		await context.dispatch("article/queryWeb", null, { root: true });
 	},
-	fetchAllGoals: async () => {
+	generateSelected: async (context, goal) => {
+		context.commit("getGoalStatus", true);
+		await context.dispatch("fetchSingleGoal", goal);
+		await context.dispatch("fetchSdgImpactAreas", goal);
+		context.commit("getGoalStatus", false);
+		
+		await context.dispatch("article/queryWeb", null, { root: true });
+	},
+	fetchAllGoals: async (context) => {
+		context.commit("getGoalStatus", true);
 		let response = await getAllGoals();
+		context.commit("getGoalStatus", false);
 		let sdg = response.data;
+		context.commit("setAllGoals", sdg);
 		return sdg;
 	},
 	fetchSingleGoal: async (context, goalNumber) => {
@@ -47,7 +64,7 @@ const actions = {
 		context.commit("setGoal", goal);
 		return goal;
 	},
-	fetchSdgAreas: async (context, goalNumber) => {
+	fetchSdgImpactAreas: async (context, goalNumber) => {
 		let response = await getGoalAreas(goalNumber);
 		let sdgAreas = response.data;
 		let randomArea = getRandomNumber(sdgAreas.length - 1);

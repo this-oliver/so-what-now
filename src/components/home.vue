@@ -11,6 +11,7 @@
         md="7">
         <goal-card
           :goal="goal"
+          :area="area"
           :loading="loadingGoal" />
       </b-col>
       <b-col
@@ -27,7 +28,7 @@
     <b-row
       class="my-5"
       align-h="center"
-      v-if="goal && area">
+      v-if="goal">
       <b-col
         cols="12">
         <targets-card
@@ -43,7 +44,7 @@
       <b-col cols="auto">
         <b-button
           :variant="(generated)?'dark':'success'"
-          @click="getGoal">
+          @click="generate">
           <span v-if="generated">
             ♻️ regenerate
           </span>
@@ -52,8 +53,26 @@
           </span>
           <b-spinner
             small
-            v-if="loadingGoal" />
+            v-if="loadingGoal && !loadingSelected" />
         </b-button>
+      </b-col>
+      <b-col cols="auto">
+        <b-dropdown :disabled="loadingGoal">
+          <template #button-content>
+            <span v-if="!generated">select a goal</span>
+            <span v-else>goal {{ goal.code }}</span>
+						&nbsp;
+            <b-spinner
+              small
+              v-if="loadingGoal && loadingSelected" />
+          </template>
+          <b-dropdown-item
+            v-for="goal in allGoals"
+            :key="goal.code"
+            @click="generateSelected(goal.code); loadingSelected = true;">
+            goal {{ goal.code }}
+          </b-dropdown-item>
+        </b-dropdown>
       </b-col>
     </b-row>
   </div>
@@ -72,9 +91,15 @@
 			"targets-card": targetsVue,
 			"article-card": articleVue
 		},
+		data: function(){
+			return{
+				loadingSelected: false
+			};
+		},
 		computed: {
 			...mapGetters({
 				goal:"sdg/getGoal",
+				allGoals:"sdg/getAllGoals",
 				area: "sdg/getArea",
 				article: "article/getArticle",
 				loadingGoal: "sdg/getGoalStatus",
@@ -86,8 +111,19 @@
 		},
 		methods: {
 			...mapActions({
-				getGoal: "sdg/generate"
+				generate: "sdg/generate",
+				generateSelected: "sdg/generateSelected"
 			}),
 		},
+		watch:{
+			loadingGoal: function(newValue){
+				if(newValue == false){
+					this.loadingSelected = false;
+				}
+			}
+		},
+		created: async function(){
+			await this.$store.dispatch("sdg/fetchAllGoals");
+		}
 	};
 </script>

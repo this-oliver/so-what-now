@@ -45,7 +45,8 @@
 		props:{
 			article: {
 				type: Object,
-				required: true
+				default: null,
+				required: false
 			},
 			loading: {
 				type: Boolean,

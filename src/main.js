@@ -6,6 +6,7 @@ import VueAxios from "vue-axios";
 import Bootstrap from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+require("./assets/css/style.css");
 require("./assets/css/font.css");
 Vue.config.productionTip = false;
 

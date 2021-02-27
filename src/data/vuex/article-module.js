@@ -21,7 +21,7 @@ const mutations = {
 };
 
 const actions = {
-	queryWeb: async function(context) {
+	queryWeb: async (context) => {
 		let goal = context.rootGetters["sdg/getGoal"];
 		let area = context.rootGetters["sdg/getArea"];
 		
@@ -41,9 +41,10 @@ const actions = {
 		} catch (error) {
 			console.log(error);
 		}
-
-
 	},
+	clearArticle: async (context)=>{
+		context.commit("setArticle", null);
+	}
 };
 
 export default {

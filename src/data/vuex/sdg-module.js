@@ -39,8 +39,8 @@ const actions = {
 		await context.dispatch("fetchSingleGoal", randomGoalNumber);
 		await context.dispatch("fetchSdgImpactAreas", randomGoalNumber + 1); // adds 1 to avoid 0 value in randomNumber variable
 		context.commit("getGoalStatus", false);
-		
-		await context.dispatch("article/queryWeb", null, { root: true });
+
+		context.dispatch("article/clearArticle", null, {root: true});
 	},
 	generateSelected: async (context, goal) => {
 		context.commit("getGoalStatus", true);
@@ -48,7 +48,7 @@ const actions = {
 		await context.dispatch("fetchSdgImpactAreas", goal);
 		context.commit("getGoalStatus", false);
 		
-		await context.dispatch("article/queryWeb", null, { root: true });
+		context.dispatch("article/clearArticle", null, {root: true});
 	},
 	fetchAllGoals: async (context) => {
 		context.commit("getGoalStatus", true);

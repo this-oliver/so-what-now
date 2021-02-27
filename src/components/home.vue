@@ -3,12 +3,12 @@
     <!-- title and link -->
     <b-row
       class="my-5"
-      align-h="around"
-      v-if="goal && area">
+      align-h="center">
       <b-col
         class="mt-2"
         sm="11"
-        md="7">
+        md="7"
+        v-if="goal && area">
         <goal-card
           :goal="goal"
           :area="area"
@@ -17,7 +17,8 @@
       <b-col
         class="mt-2"
         sm="11"
-        md="4">
+        md="4"
+        v-if="goal">
         <article-card
           :article="article"
           :loading="loadingArticle" />
@@ -44,6 +45,7 @@
       <b-col cols="auto">
         <b-button
           :variant="(generated)?'dark':'success'"
+          :disabled="loadingGoal"
           @click="generate">
           <span v-if="generated">
             ♻️ regenerate

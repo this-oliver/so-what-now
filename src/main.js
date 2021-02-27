@@ -1,6 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
-import Store from "./store";
+import Store from "./data/store";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import Bootstrap from "bootstrap-vue";

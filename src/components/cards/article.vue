@@ -20,19 +20,37 @@
             📰 Random Article
           </span>
           <hr>
-          <span v-if="article">
-            <p>
-              <b>{{ article.title }}</b>
-            </p>
-            <p>
-              <small><i>{{ article.description }}</i></small>
-            </p>
-            <b-link
-              :href="article.url"
-              target="_blank">
-              click me to read full article
-            </b-link>
-          </span>
+          <b-row v-if="article">
+            <b-col cols="12">
+              <span>
+                <p>
+                  <b>{{ article.title }}</b>
+                </p>
+                <p>
+                  <small><i>{{ article.description }}</i></small>
+                </p>
+                <b-link
+                  :href="article.url"
+                  target="_blank">
+                  click me to read full article
+                </b-link>
+              </span>
+            </b-col>
+          </b-row>
+          <b-row
+            v-else
+            align-h="center">
+            <b-col cols="auto">
+              <b-button
+                :disabled="!goal"
+                @click="generateArticle">
+                fetch random article
+                <b-spinner
+                  small
+                  v-if="loadingArticle" />
+              </b-button>
+            </b-col>
+          </b-row>
         </b-skeleton-wrapper>
       </b-col>
     </b-row>
@@ -40,6 +58,7 @@
 </template>
 
 <script>
+	import { mapActions, mapGetters } from "vuex";
 	export default {
 		name:"Article",
 		props:{
@@ -52,6 +71,17 @@
 				type: Boolean,
 				default: false
 			}
+		},
+		computed: {
+			...mapGetters({
+				goal:"sdg/getGoal",
+				loadingArticle: "article/getArticleStatus"
+			})
+		},
+		methods:{
+			...mapActions({
+				generateArticle: "article/queryWeb"
+			})
 		}
 	};
 </script>

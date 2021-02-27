@@ -3,7 +3,8 @@
     <b-row>
       <b-col
         class="mt-2"
-        cols="12">
+        sm="11"
+        md="11">
         <b-skeleton-wrapper :loading="loading">
           <template #loading>
             <b-skeleton

@@ -5,12 +5,13 @@
       align-h="center">
       <b-col
         class="mt-2"
-        cols="12">
-        <hr>
+        sm="11"
+        md="11">
         <span
           class="sub-title">
           🎯 Targets
         </span>
+        <hr>
       </b-col>
       <b-col
         class="mb-1"

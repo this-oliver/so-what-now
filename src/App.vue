@@ -21,7 +21,9 @@
     <footer id="foot">
       <b-row align-h="around">
         <b-col cols="auto">
-          created by <a href="https://olivermanzi.com">oliver</a> with ☕️ and ♻️
+          created by <a
+            href="https://olivermanzi.com"
+            target="_blank">oliver</a> with ☕️ and ♻️
         </b-col>
         <b-col cols="auto">
           contribute via <a

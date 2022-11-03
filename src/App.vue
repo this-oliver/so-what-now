@@ -21,13 +21,16 @@
     <footer id="foot">
       <b-row align-h="around">
         <b-col cols="auto">
-          created by <a
-            href="https://olivermanzi.com"
-            target="_blank">oliver</a> with ☕️ and ♻️
+          created by
+          <a
+            href="https://www.oliverrr.net"
+            target="_blank">oliver</a> with ☕️
+          and ♻️
         </b-col>
         <b-col cols="auto">
-          contribute via <a
-            href="https://github.com/olivermanzi/so-what-now"
+          contribute via
+          <a
+            href="https://github.com/this-oliver/so-what-now"
             target="_blank">github</a>
         </b-col>
       </b-row>
